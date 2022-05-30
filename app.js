@@ -3,6 +3,7 @@ const mongoose = require('mongoose');
 const User = require('./models/user');
 const bcrypt = require('bcryptjs');
 const session = require('express-session');
+const MemoryStore = require('memorystore')(session)
 require('dotenv').config();
 
 // CONSTANTS
@@ -30,6 +31,9 @@ app.use(session({
   resave: false,
   saveUninitialized: false,
   secret: SESS_SECRET,
+  store: new MemoryStore({
+    checkPeriod: 86400000 // prune expired entries every 24h
+  }),
   cookie: {
     maxAge: sess_duration,
     sameSite: true
