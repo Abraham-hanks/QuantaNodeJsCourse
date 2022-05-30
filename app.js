@@ -71,6 +71,9 @@ const requireLogin = (req, res, next) => {
 
 // ====== GET =========
 app.get('/', (req, res) => {
+  if (req.session.user_id) {
+    res.redirect("/profile")
+  }
   res.render('home', { user: null })
 })
 
