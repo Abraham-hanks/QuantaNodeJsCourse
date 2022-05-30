@@ -131,7 +131,7 @@ app.post('/login', async (req, res) => {
     }
   } catch (error) {
     console.log(error);
-    res.render('login', { errors: ['Oops an Error Occurred!'], useer: null });
+    res.render('login', { errors: ['Oops an Error Occurred!'], user: null });
   }
 })
 
