@@ -55,7 +55,7 @@ const validateRegister = (req, res, next) => {
   }
 
   if (errorMessages.length) {
-    res.render('register', { errors: errorMessages });
+    res.render('register', { errors: errorMessages, user: null });
   }
   else {
     next();
@@ -94,7 +94,8 @@ app.post('/register', validateRegister, async (req, res) => {
     const existingUser = await User.findOne({ username: username });
     if (existingUser) {
       return res.render('register', {
-        errors: ['A user with this username already exists!']
+        errors: ['A user with this username already exists!'],
+        user: null
       });
     }
     const salt = await bcrypt.genSalt(10);
@@ -105,7 +106,7 @@ app.post('/register', validateRegister, async (req, res) => {
     res.redirect('/');
   } catch (err) {
     console.log(err)
-    res.render('register', { errors: ['Oops an Error Occurred!'] })
+    res.render('register', { errors: ['Oops an Error Occurred!'], user: null })
   }
 })
 
@@ -119,11 +120,11 @@ app.post('/login', async (req, res) => {
       res.redirect('/profile');
     }
     else {
-      res.render('login', { errors: ['Invalid credentials!']});
+      res.render('login', { errors: ['Invalid credentials!'], user: null});
     }
   } catch (error) {
     console.log(error);
-    res.render('login', { errors: ['Oops an Error Occurred!'] });
+    res.render('login', { errors: ['Oops an Error Occurred!'], useer: null });
   }
 })
 
